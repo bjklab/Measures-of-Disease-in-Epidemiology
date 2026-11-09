@@ -9,7 +9,7 @@ set.seed(16)
 
 
 #' print slides to PDF
-pagedown::chrome_print(input = "measures_of_disease_in_epidemiology_2021_bjk.html",
+pagedown::chrome_print(input = "measures_of_disease_in_epidemiology_2026_bjk.html",
                        output = "measures_of_disease_in_epidemiology.pdf",
                        wait = 30,
                        timeout = 180)
