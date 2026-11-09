@@ -50,7 +50,7 @@ background-size: cover
 Brendan J. Kelly, MD, MS  
 Infectious Diseases, Epidemiology & Microbiology  
 University of Pennsylvania  
-19 November 2024  
+17 November 2026  
 ]
 ]
 
@@ -222,6 +222,26 @@ class: full-screen hide-count
 
 ---
 
+## Dichotomania 
+
+.pad-left[
+- As we discuss prevalence, incidence, RR, and OR, we focus on <ins>dichotomous</ins> exposures and outcomes.
+
+- With dichotomous data:
+
+    - information about uncertainty is lost  
+    
+    - misclassification is a risk  
+
+
+
+.footnote[[Altman & Royston _BMJ_ 2006](https://www.bmj.com/content/332/7549/1080.1.full)]  
+
+]  
+  
+  
+---
+
 ## Data Types 
 
 .pad-left[
@@ -266,16 +286,13 @@ class: full-screen hide-count
 
 .pad-left[
 
-- **Mean ( $\mu$)**:
-    $$\mu=\frac{1}{N}\sum_{i=1}^Nx_i$$
+- **Mean**: arithmetic average (sum / number of observations)
 
 - **Median**: middle value, when values ordered / ranked
 
 - **Mode**: most frequently occurring value
 
 ]
-
-<p style="text-align: center;"><mark> (you do <strong>NOT</strong> need to memorize these formulas) </mark></p>
 
 
 ---
@@ -284,7 +301,7 @@ class: full-screen hide-count
 
 .pad-left[
 
-- **Standard deviation (SD or $\sigma$)**: 
+- **Standard deviation (SD or $\sigma$)**: depends on distance from the mean: 
     $$\sigma=\sqrt{\frac{1}{N}*\sum_{i=1}^N(x_i - \mu)^2}$$
 
 - **Interquartile range (IQR)** depends on ranking the values:
@@ -298,104 +315,6 @@ class: full-screen hide-count
 ]
 
 <p style="text-align: center;"><mark> (you do <strong>NOT</strong> need to memorize these formulas) </mark></p>
-
-
----
-
-## Describing Continuous Data
-
-.pad-left[
-
-- "Normally distributed": data well characterized by **mean** and **standard deviation (SD)**.
-
-- “Non-parametric” data have a mean and standard deviation, but these parameters do NOT characterize the data well...  
-  
-]
-
-
----
-
-## "Normally Distributed" Continuous Data 
-
-```{r parametric_data, echo=FALSE, warning=FALSE, message=FALSE, fig.height=6, fig.width=12, fig.align='center', fig.retina=2}
-
-library(tidyverse)
-library(NHANES)
-library(ggtext)
-set.seed(16)
-
-NHANES |> 
-  as_tibble() |> 
-  filter(Age >= 18) |> 
-  mutate(Gender = paste0("Gender: ", Gender)) |> 
-  ggplot(data = _) + 
-  geom_histogram(aes(x = Height, fill = Gender), colour = "black") +
-  scale_fill_viridis_d(option = "turbo", begin = 0.15, end = 0.95) +
-  theme_classic() +
-  theme(legend.position = 'none', line = element_line(colour = "black"), text = element_text(size = 22), plot.title = ggtext::element_markdown(size = 22), axis.title.x = ggtext::element_markdown(size = 22)) +
-  labs(title = "Height (cm) from a Population Survey of US Citizens", subtitle = "7,481 subjects with age >= 18 years", x = "Height (cm)", y = "Subject Count") +
-  facet_wrap(facets = ~ Gender, scales = "free_x")
-
-```
-
-.footnote[[CDC National Health and Nutrition Examination Survey (NHANES)](https://www.cdc.gov/nchs/nhanes/index.htm)]
-
-
-
----
-
-## "Non-Parametric" Continuous Data: Skewed 
-
-```{r skewed_data, echo=FALSE, warning=FALSE, message=FALSE, fig.height=6, fig.width=12, fig.align='center', fig.retina=2}
-
-library(tidyverse)
-library(NHANES)
-library(ggtext)
-set.seed(16)
-
-NHANES |> 
-  as_tibble() |> 
-  filter(Age >= 18) |> 
-  mutate(Gender = paste0("Gender: ", Gender)) |> 
-  ggplot(data = _) + 
-  geom_histogram(aes(x = BMI, fill = Gender), colour = "black") +
-  scale_fill_viridis_d(option = "turbo", begin = 0.15, end = 0.95) +
-  theme_classic() +
-  theme(legend.position = 'none', line = element_line(colour = "black"), text = element_text(size = 22), plot.title = ggtext::element_markdown(size = 22), axis.title.x = ggtext::element_markdown(size = 22)) +
-  labs(title = "BMI (kg/m^2^) from a Population Survey of US Citizens", subtitle = "7,481 subjects with age >= 18 years", x = "BMI (kg/m^2^)", y = "Subject Count") +
-  facet_wrap(facets = ~ Gender, scales = "free_x")
-
-```
-
-.footnote[[CDC National Health and Nutrition Examination Survey (NHANES)](https://www.cdc.gov/nchs/nhanes/index.htm)]
-
-
----
-
-## "Non-Parametric" Continuous Data: Uniform 
-
-```{r uniform_data, echo=FALSE, warning=FALSE, message=FALSE, fig.height=6, fig.width=12, fig.align='center', fig.retina=2}
-
-library(tidyverse)
-library(NHANES)
-library(ggtext)
-set.seed(16)
-
-NHANES |> 
-  as_tibble() |> 
-  #filter(Age >= 18) |> 
-  mutate(Gender = paste0("Gender: ", Gender)) |> 
-  ggplot(data = _) + 
-  geom_histogram(aes(x = Age, fill = Gender), colour = "black") +
-  scale_fill_viridis_d(option = "turbo", begin = 0.15, end = 0.95) +
-  theme_classic() +
-  theme(legend.position = 'none', line = element_line(colour = "black"), text = element_text(size = 22), plot.title = ggtext::element_markdown(size = 22), axis.title.x = ggtext::element_markdown(size = 22)) +
-  labs(title = "Age (years) from a Population Survey of US Citizens", subtitle = " ", x = "Age (years)", y = "Subject Count") +
-  facet_wrap(facets = ~ Gender, scales = "free_x")
-
-```
-
-.footnote[[CDC National Health and Nutrition Examination Survey (NHANES)](https://www.cdc.gov/nchs/nhanes/index.htm)]
 
 
 ---
@@ -730,9 +649,11 @@ class: full-screen hide-count
 
 ## Cohort at Risk for _Pneumocystis_ 
 
-```{r pcp_study, echo=FALSE, warning=FALSE, message=FALSE, fig.height=7, fig.width=12, fig.align='center', fig.retina=2}
+```{r pcp_study, echo=FALSE, warning=FALSE, message=FALSE, fig.height=7, fig.width=12, fig.align='center', fig.retina=2, cache=TRUE}
 
 library(tidyverse)
+library(NHANES)
+library(ggtext)
 set.seed(16)
 
 tibble(subject_id = factor(seq(50)),
@@ -757,7 +678,7 @@ tibble(subject_id = factor(seq(50)),
   geom_segment(aes(x = enrollment, xend = exit_adjust, y = subject_id, yend = subject_id), colour = "grey", size = 1) +
   geom_segment(aes(x = pcp_start, xend = pcp_stop, y = subject_id, yend = subject_id), colour = "red", size = 1) +
   geom_point(aes(x = pcp_start, y = subject_id), colour = "red", size = 2) +
-  geom_segment(aes(x = ppx_start, xend = ppx_stop, y = subject_id, yend = subject_id), colour = "blue", size = 1, size = 2) +
+  geom_segment(aes(x = ppx_start, xend = ppx_stop, y = subject_id, yend = subject_id), colour = "blue", size = 1) +
   labs(x = "Duration of Study Enrollment (years)", y = "Subject ID") +
   theme_classic() +
   theme(text = element_text(size = 22), axis.text.y = element_text(size = 10)) -> p
@@ -1327,7 +1248,7 @@ c_graph %>% render_graph()
 
 - Examine relationships between exposures and outcomes.  
   
-- <ins>Goal</ins>: inference about larger world.  
+- <ins>Goal</ins>: **inference about larger world.**  
 
 ]
 
@@ -1407,8 +1328,6 @@ tibble(`AIDS` = factor(x = c("+","-"), levels = c("-","+")), Pneumocystis = fact
 
     - intervention/control are exposure groups; outcome is dichotomous for 2x2 table data  
   
-- <ins>Goal</ins>: inference about larger world.  
-
 ]
 
 .pull-right[
